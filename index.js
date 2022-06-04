@@ -35,6 +35,12 @@ const main = async () => {
         //console.log(tasks.listArr);
         console.log(tasks.fullListing);
         break;
+      case 3:
+        console.log(tasks.fullTaskListingByStatus(true));
+        break;
+      case 4:
+        console.log(tasks.fullTaskListingByStatus(false));
+        break;
     }
 
     try {

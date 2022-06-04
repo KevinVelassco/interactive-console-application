@@ -33,12 +33,28 @@ class Tasks {
     let data = "";
 
     this.listArr.forEach((task, index) => {
-      const idx = `${index + 1}`.green;
+      const idx = `${index + 1}:`.green;
       const { description, finishDate } = task;
       const status = finishDate ? "completed".green : "pending".red;
 
-      data += `${idx}. ${description} :: ${status}\n`;
+      data += `${idx} ${description} :: ${status}\n`;
     });
+
+    return data;
+  }
+
+  fullTaskListingByStatus(taskStatus = true) {
+    let data = "";
+
+    this.listArr
+      .filter((task) => (taskStatus ? task.finishDate : !task.finishDate))
+      .forEach((task, index) => {
+        const idx = `${index + 1}:`.green;
+        const { description, finishDate } = task;
+        const status = finishDate ? finishDate.green : "pending".red;
+
+        data += `${idx} ${description} :: ${status}\n`;
+      });
 
     return data;
   }
