@@ -93,6 +93,8 @@ const taskMenu = async (tasks = []) => {
     }`,
   }));
 
+  choices.unshift({ value: 0, name: `${"0: cancel".blue}` });
+
   const { option } = await inquirer.prompt({
     type: "list",
     name: "option",

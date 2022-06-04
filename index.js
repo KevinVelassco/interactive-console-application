@@ -45,11 +45,16 @@ const main = async () => {
         break;
       case 6:
         const taskId = await taskMenu(tasks.listArr);
+
+        if (!taskId) break;
+
         const canDelete = await confirmDeletion();
+
         if (canDelete) {
           tasks.delete(taskId);
           console.log("task deleted successfully".green);
         }
+
         break;
     }
 
