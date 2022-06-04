@@ -80,8 +80,56 @@ const readInput = async () => {
   return task;
 };
 
+const taskMenu = async (tasks = []) => {
+  if (!tasks.length) {
+    console.log("there are no tasks to delete".red);
+    return null;
+  }
+
+  const choices = tasks.map((task, index) => ({
+    value: task.id,
+    name: `${String(index + 1).green}: ${task.description} :: ${
+      task.finishDate ? task.finishDate.green : "pending".red
+    }`,
+  }));
+
+  const { option } = await inquirer.prompt({
+    type: "list",
+    name: "option",
+    message: "select tare to delete!",
+    choices,
+  });
+
+  return option;
+};
+
+const confirmDeletion = async () => {
+  const { option } = await inquirer.prompt([
+    {
+      type: "input", //type confirm
+      name: "option",
+      message: "you want to delete the task yes/no? ",
+      validate(value) {
+        if (value.length === 0) {
+          return "please enter a value";
+        }
+
+        if (!["yes", "no"].includes(value)) {
+          return "you must enter yes/no";
+        }
+
+        return true;
+      },
+    },
+  ]);
+
+  return option === "yes" ? true : false;
+};
+
 module.exports = {
   inquirerMenu,
   inquirerPause,
   readInput,
+  taskMenu,
+  confirmDeletion,
 };

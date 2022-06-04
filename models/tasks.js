@@ -11,6 +11,10 @@ class Tasks {
     this._list[task.id] = task;
   }
 
+  delete(id) {
+    if (this._list[id]) delete this._list[id];
+  }
+
   get listArr() {
     const list = [];
 

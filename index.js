@@ -4,6 +4,8 @@ const {
   inquirerMenu,
   inquirerPause,
   readInput,
+  taskMenu,
+  confirmDeletion,
 } = require("./helpers/inquirer");
 const { saveFile, readBD } = require("./helpers/saveFile");
 const Tasks = require("./models/tasks");
@@ -40,6 +42,14 @@ const main = async () => {
         break;
       case 4:
         console.log(tasks.fullTaskListingByStatus(false));
+        break;
+      case 6:
+        const taskId = await taskMenu(tasks.listArr);
+        const canDelete = await confirmDeletion();
+        if (canDelete) {
+          tasks.delete(taskId);
+          console.log("task deleted successfully".green);
+        }
         break;
     }
 
