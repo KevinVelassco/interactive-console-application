@@ -6,6 +6,7 @@ const {
   readInput,
   taskMenu,
   confirmDeletion,
+  completingTasks,
 } = require("./helpers/inquirer");
 const { saveFile, readBD } = require("./helpers/saveFile");
 const Tasks = require("./models/tasks");
@@ -42,6 +43,14 @@ const main = async () => {
         break;
       case 4:
         console.log(tasks.fullTaskListingByStatus(false));
+        break;
+      case 5:
+        const taskIds = await completingTasks(tasks.listArr);
+
+        if (!taskIds) break;
+
+        tasks.finishTasks(taskIds);
+
         break;
       case 6:
         const taskId = await taskMenu(tasks.listArr);

@@ -128,10 +128,35 @@ const confirmDeletion = async () => {
   return option === "yes" ? true : false;
 };
 
+const completingTasks = async (tasks = []) => {
+  if (!tasks.length) {
+    console.log("there are no tasks to delete".red);
+    return null;
+  }
+
+  const choices = tasks.map((task, index) => ({
+    value: task.id,
+    name: `${String(index + 1).green}: ${task.description} :: ${
+      task.finishDate ? task.finishDate.green : "pending".red
+    }`,
+    checked: task.finishDate ? true : false,
+  }));
+
+  const { ids } = await inquirer.prompt({
+    type: "checkbox",
+    name: "ids",
+    message: "select tare to delete!",
+    choices,
+  });
+
+  return ids;
+};
+
 module.exports = {
   inquirerMenu,
   inquirerPause,
   readInput,
   taskMenu,
   confirmDeletion,
+  completingTasks,
 };

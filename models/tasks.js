@@ -15,6 +15,20 @@ class Tasks {
     if (this._list[id]) delete this._list[id];
   }
 
+  finishTasks(ids = []) {
+    ids.forEach((id) => {
+      const task = this._list[id];
+
+      if (!task.finishDate) task.finishDate = new Date().toISOString();
+    });
+
+    this.listArr.forEach(({ id }) => {
+      if (!ids.includes(id)) {
+        this._list[id].finishDate = null;
+      }
+    });
+  }
+
   get listArr() {
     const list = [];
 
